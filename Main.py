@@ -1,6 +1,6 @@
 import sys
 from stopwatch import Stopwatch
-from settings import Settings
+from gridsettings import Gridsettings
 from PyQt6.QtWidgets import (QGridLayout, QWidget, QApplication, QMainWindow)
 from PyQt6.QtGui import QAction
 
@@ -18,13 +18,13 @@ class Window(QMainWindow):
         self.setCentralWidget(w)
         w.setLayout(self.layout)
 
-        settings = QAction(self)
-        settings.setShortcut("h")
-        settings.triggered.connect(self.initSettings)
-        self.menuBar().addAction(settings)
+        gridsettings = QAction(self)
+        gridsettings.setShortcut("h")
+        gridsettings.triggered.connect(self.initSettings)
+        self.menuBar().addAction(gridsettings)
 
         stopwatch = QAction(self)
-        stopwatch.setShortcut("Ctrl+1")
+        stopwatch.setShortcut("1")
         stopwatch.triggered.connect(self.initStopwatch)
         self.menuBar().addAction(stopwatch)
 
@@ -33,7 +33,7 @@ class Window(QMainWindow):
         self.move(qr.topLeft())
         self.setWindowTitle("QoL")
         self.setStyleSheet("background-color: #282828")
-        self.setFixedSize(276, 164)
+        self.adjustSize()
 
         self.show()
 
@@ -42,10 +42,11 @@ class Window(QMainWindow):
         self.adjustSize()
 
     def adjustSize(self):
-        self.setFixedSize(276, 164 + (152 * (self.layout.count() - 1)))
+        if self.layout.count() == 0: self.setFixedSize(276, 164)
+        else: self.setFixedSize(276, 164 + (152 * (self.layout.count() - 1)))
 
     def initSettings(self):
-        settings = Settings.getSettings(self)
+        settings = Gridsettings.getSettings(self)
         self.layout.addWidget(settings)
         self.adjustSize()
 

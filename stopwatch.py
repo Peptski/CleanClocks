@@ -5,19 +5,18 @@ from PyQt6.QtWidgets import (QGroupBox, QLabel, QVBoxLayout)
 
 
 class Stopwatch(QGroupBox):
-    widgetSize = [256, 144]
     flag = False
     count = 0
 
     def __init__(self, parent):
         super(Stopwatch, self).__init__(parent)
         self.parent = parent
-        self.init()
+        self.init(parent)
 
-    def init(self):
+    def init(self, parent):
         layout = QVBoxLayout()
         self.setLayout(layout)
-        self.setFixedSize(self.widgetSize[0], self.widgetSize[1])
+        self.setFixedSize(parent.widgetSize[0], parent.widgetSize[1])
         self.setStyleSheet("background-color: #212121; border: 0px; border-radius: 20px")
 
         lbl = QLabel()

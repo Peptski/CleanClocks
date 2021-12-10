@@ -33,20 +33,26 @@ class Window(QMainWindow):
         self.move(qr.topLeft())
         self.setWindowTitle("QoL")
         self.setStyleSheet("background-color: #282828")
+        self.setFixedSize(276, 164)
 
         self.show()
 
     def delModule(self, module):
         self.layout.removeWidget(module)
-        self.setStyleSheet("background-color: #282828")
+        self.adjustSize()
+
+    def adjustSize(self):
+        self.setFixedSize(276, 164 + (152 * (self.layout.count() - 1)))
 
     def initSettings(self):
         settings = Settings.getSettings(self)
         self.layout.addWidget(settings)
+        self.adjustSize()
 
     def initStopwatch(self):
         stopwatch = Stopwatch(self)
         self.layout.addWidget(stopwatch)
+        self.adjustSize()
 
 def main():
     app = QApplication(sys.argv)

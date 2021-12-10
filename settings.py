@@ -3,13 +3,12 @@ from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import (QGroupBox, QLabel, QVBoxLayout)
 
 class Settings(QGroupBox):
-    widgetSize = [256, 144]
     instance = None
 
     def __init__(self, parent):
         if Settings.instance == None:
             super(Settings, self).__init__(parent)
-            self.init()
+            self.init(parent)
             self.parent = parent
             Settings.instance = self
 
@@ -17,10 +16,10 @@ class Settings(QGroupBox):
         if Settings.instance == None: Settings(parent)
         return Settings.instance
 
-    def init(self):
+    def init(self, parent):
         layout = QVBoxLayout()
         self.setLayout(layout)
-        self.setFixedSize(self.widgetSize[0], self.widgetSize[1])
+        self.setFixedSize(parent.widgetSize[0], parent.widgetSize[1])
         self.setStyleSheet("background-color: #212121; border: 0px; border-radius: 20px")
 
         lbl = QLabel()

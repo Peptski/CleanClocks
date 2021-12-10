@@ -31,16 +31,17 @@ class Window(QMainWindow):
         qr = self.frameGeometry()
         qr.moveCenter(self.screen().availableGeometry().center())
         self.move(qr.topLeft())
-        self.setWindowTitle("QoLApp")
+        self.setWindowTitle("QoL")
         self.setStyleSheet("background-color: #282828")
 
         self.show()
 
     def delModule(self, module):
         self.layout.removeWidget(module)
+        self.setStyleSheet("background-color: #282828")
 
     def initSettings(self):
-        settings = Settings(self)
+        settings = Settings.getSettings(self)
         self.layout.addWidget(settings)
 
     def initStopwatch(self):

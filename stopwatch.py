@@ -6,7 +6,6 @@ from PyQt6.QtWidgets import (QGroupBox, QLabel, QVBoxLayout)
 
 class Stopwatch(QGroupBox):
     widgetSize = [256, 144]
-    lbl = None
     flag = False
     count = 0
 
@@ -36,7 +35,7 @@ class Stopwatch(QGroupBox):
         if QMouseEvent.button() == Qt.MouseButton.RightButton:
             self.reset()
         elif QMouseEvent.button() == Qt.MouseButton.MiddleButton:
-            self.remove()
+            self.parent.delModule(self)
         else:
             self.startStop()
 
@@ -62,6 +61,3 @@ class Stopwatch(QGroupBox):
         self.flag = False
         self.count = 0
         self.lbl.setText("00:00:00")
-
-    def remove(self):
-        self.parent.delModule(self)

@@ -23,40 +23,29 @@ class Stopwatch(QGroupBox):
         self.lbl = lbl
         lbl.setStyleSheet("color: white")
         lbl.setFont(QFont('Serif', 43, QFont.Weight.Bold))
-        lbl.setText("00:00:00")
         layout.addWidget(lbl)
 
         timer = QTimer(self)
-        timer.timeout.connect(self.showTime)
+        timer.timeout.connect(self.calcTime)
         timer.start(10)
 
     def mousePressEvent(self, QMouseEvent):
-        if QMouseEvent.button() == Qt.MouseButton.RightButton:
-            self.reset()
+        if QMouseEvent.button() == Qt.MouseButton.LeftButton:
+            self.flag = not self.flag
+        elif QMouseEvent.button() == Qt.MouseButton.RightButton:
+            self.flag = False
+            self.count = 0
+            self.lbl.setText("00:00:00")
         elif QMouseEvent.button() == Qt.MouseButton.MiddleButton:
             self.parent.delModule(self)
-        else:
-            self.startStop()
 
-    def calcTime(self, count):
+    def calcTime(self):
+        if self.flag: self.count += 1
         t = ["00", ":", "00", ":", "00"]
-        if count % 100 < 10: t[4] = "0" + str(count % 100)
-        else: t[4] = str(count % 100)
-        if math.floor((count % 6000) / 100) < 10: t[2] = "0" + str(math.floor((count % 6000) / 100))
-        else: t[2] = str(math.floor((count % 6000) / 100))
-        if math.floor(count / 6000) < 10: t[0] = "0" + str(math.floor(count / 6000))
-        else: t[0] = str(math.floor(count / 6000))
-        return "".join(t)
-
-    def showTime(self):
-        if self.flag:
-            self.count += 1
-        self.lbl.setText(self.calcTime(self.count))
-
-    def startStop(self):
-        self.flag = not self.flag
-  
-    def reset(self):
-        self.flag = False
-        self.count = 0
-        self.lbl.setText("00:00:00")
+        if self.count % 100 < 10: t[4] = "0" + str(self.count % 100)
+        else: t[4] = str(self.count % 100)
+        if math.floor((self.count % 6000) / 100) < 10: t[2] = "0" + str(math.floor((self.count % 6000) / 100))
+        else: t[2] = str(math.floor((self.count % 6000) / 100))
+        if math.floor(self.count / 6000) < 10: t[0] = "0" + str(math.floor(self.count / 6000))
+        else: t[0] = str(math.floor(self.count / 6000))
+        self.lbl.setText("".join(t))

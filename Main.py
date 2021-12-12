@@ -1,6 +1,7 @@
 import sys
 from stopwatch import Stopwatch
 from gridsettings import Gridsettings
+from timer import Timer
 from PyQt6.QtWidgets import (QGridLayout, QWidget, QApplication, QMainWindow)
 from PyQt6.QtGui import QAction
 
@@ -18,6 +19,8 @@ class Window(QMainWindow):
         self.setCentralWidget(w)
         w.setLayout(self.layout)
 
+        ### Start of modules
+
         gridsettings = QAction(self)
         gridsettings.setShortcut("h")
         gridsettings.triggered.connect(self.initSettings)
@@ -27,6 +30,13 @@ class Window(QMainWindow):
         stopwatch.setShortcut("1")
         stopwatch.triggered.connect(self.initStopwatch)
         self.menuBar().addAction(stopwatch)
+
+        timer = QAction(self)
+        timer.setShortcut("2")
+        timer.triggered.connect(self.initTimer)
+        self.menuBar().addAction(timer)
+
+        ### End of modules
 
         qr = self.frameGeometry()
         qr.moveCenter(self.screen().availableGeometry().center())
@@ -53,6 +63,11 @@ class Window(QMainWindow):
     def initStopwatch(self):
         stopwatch = Stopwatch(self)
         self.layout.addWidget(stopwatch)
+        self.adjustSize()
+
+    def initTimer(self):
+        timer = Timer(self)
+        self.layout.addWidget(timer)
         self.adjustSize()
 
 def main():

@@ -1,6 +1,7 @@
 import math
+from win10toast import ToastNotifier
 from PyQt6.QtCore import QTimer, Qt
-from PyQt6.QtGui import QFont, QKeyEvent
+from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import (QGroupBox, QLabel, QVBoxLayout)
 
 class Timer(QGroupBox):
@@ -47,7 +48,7 @@ class Timer(QGroupBox):
             if QMouseEvent.button() == Qt.MouseButton.LeftButton:
                 if self.count == 0:
                     self.waitingInput = True
-                    self.lbl.setText("00:00:00")
+                    self.lbl.setText("00:00:xx")
                 self.flag = not self.flag
             elif QMouseEvent.button() == Qt.MouseButton.RightButton:
                 self.flag = False
@@ -58,6 +59,9 @@ class Timer(QGroupBox):
     def calcTime(self):
         if self.flag: self.count -= 1
         if not self.waitingInput:
+            if self.count == 1:
+                toast = ToastNotifier()
+                toast.show_toast("Timer finished!","Click the module to set a new timer",duration=10, threaded=True)
             if self.count <= 0:
                 self.flag = False
                 self.count = 0

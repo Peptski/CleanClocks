@@ -1,3 +1,4 @@
 *.pyc
+*.spec
 build/*
-Main.spec
+img.ico

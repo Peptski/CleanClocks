@@ -24,7 +24,6 @@ class Timer(QGroupBox):
         lbl = QLabel()
         self.lbl = lbl
         lbl.setStyleSheet("color: white")
-        lbl.setFont(QFont('Serif', 43, QFont.Weight.Bold))
         layout.addWidget(lbl)
 
         timer = QTimer(self)
@@ -48,6 +47,7 @@ class Timer(QGroupBox):
             if QMouseEvent.button() == Qt.MouseButton.LeftButton:
                 if self.count == 0:
                     self.waitingInput = True
+                    self.lbl.setFont(QFont('Serif', 44, QFont.Weight.Bold))
                     self.lbl.setText("00:00:xx")
                 self.flag = not self.flag
             elif QMouseEvent.button() == Qt.MouseButton.RightButton:
@@ -65,8 +65,10 @@ class Timer(QGroupBox):
             if self.count <= 0:
                 self.flag = False
                 self.count = 0
-                self.lbl.setText("Set time")
+                self.lbl.setFont(QFont('Serif', 40, QFont.Weight.Bold))
+                self.lbl.setText("Set timer")
             else:
+                self.lbl.setFont(QFont('Serif', 44, QFont.Weight.Bold))
                 t = ["00", ":", "00", ":", "00"]
                 if self.count % 100 < 10: t[4] = "0" + str(self.count % 100)
                 else: t[4] = str(self.count % 100)

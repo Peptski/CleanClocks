@@ -22,7 +22,7 @@ class Stopwatch(QGroupBox):
         lbl = QLabel()
         self.lbl = lbl
         lbl.setStyleSheet("color: white")
-        lbl.setFont(QFont('Serif', 43, QFont.Weight.Bold))
+        lbl.setFont(QFont('Serif', 44, QFont.Weight.Bold))
         layout.addWidget(lbl)
 
         timer = QTimer(self)

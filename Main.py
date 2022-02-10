@@ -1,7 +1,8 @@
 import sys
 from stopwatch import Stopwatch
-from gridsettings import Gridsettings
 from timer import Timer
+from interval import Interval
+from help import Help
 from PyQt6.QtWidgets import (QGridLayout, QWidget, QApplication, QMainWindow)
 from PyQt6.QtGui import QAction
 
@@ -21,10 +22,10 @@ class Window(QMainWindow):
 
         ### Start of modules
 
-        gridsettings = QAction(self)
-        gridsettings.setShortcut("h")
-        gridsettings.triggered.connect(self.initSettings)
-        self.menuBar().addAction(gridsettings)
+        help = QAction(self)
+        help.setShortcut("F1")
+        help.triggered.connect(self.initHelp)
+        self.menuBar().addAction(help)
 
         stopwatch = QAction(self)
         stopwatch.setShortcut("1")
@@ -36,12 +37,19 @@ class Window(QMainWindow):
         timer.triggered.connect(self.initTimer)
         self.menuBar().addAction(timer)
 
+        interval = QAction(self)
+        interval.setShortcut("3")
+        interval.triggered.connect(self.initInterval)
+        self.menuBar().addAction(interval)
+
+        self.initHelp()
+
         ### End of modules
 
         qr = self.frameGeometry()
         qr.moveCenter(self.screen().availableGeometry().center())
         self.move(qr.topLeft())
-        self.setWindowTitle("QoL")
+        self.setWindowTitle("CleanClocks")
         self.setStyleSheet("background-color: #282828")
         self.adjustSize()
 
@@ -55,9 +63,9 @@ class Window(QMainWindow):
         if self.layout.count() == 0: self.setFixedSize(276, 164)
         else: self.setFixedSize(276, 164 + (152 * (self.layout.count() - 1)))
 
-    def initSettings(self):
-        settings = Gridsettings.getSettings(self)
-        self.layout.addWidget(settings)
+    def initHelp(self):
+        help = Help.getHelp(self)
+        self.layout.addWidget(help)
         self.adjustSize()
 
     def initStopwatch(self):
@@ -68,6 +76,11 @@ class Window(QMainWindow):
     def initTimer(self):
         timer = Timer(self)
         self.layout.addWidget(timer)
+        self.adjustSize()
+
+    def initInterval(self):
+        interval = Interval(self)
+        self.layout.addWidget(interval)
         self.adjustSize()
 
 def main():

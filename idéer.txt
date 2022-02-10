@@ -1,6 +1,0 @@
-stopwatch (Lap)?
-gridstyle settings (choose row + col) (maxw 9, maxh 8)
-
-Vecko nummer
-
-interval timer (NMZ/Crabs/Overload)
